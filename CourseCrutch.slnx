@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/1) Web/">
+    <Project Path="CourseCrutch.Clients/CourseCrutch.Clients.csproj">
+      <Deploy Solution="Debug|*" />
+    </Project>
+  </Folder>
+  <Folder Name="/2) API/">
+    <Project Path="CourseCrutch.API/CourseCrutch.API.csproj" />
+  </Folder>
+  <Folder Name="/3) Core/" />
+  <Folder Name="/3) Core/Application/">
+    <Project Path="CourseCrutch.Application/CourseCrutch.Application.csproj" />
+  </Folder>
+  <Folder Name="/3) Core/Domain/">
+    <Project Path="CourseCrutch.Domain/CourseCrutch.Domain.csproj" />
+  </Folder>
+  <Folder Name="/4) Infrastructure/">
+    <Project Path="CourseCrutch.Infrastructure/CourseCrutch.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/5) Unit Tests/">
+    <Project Path="CourseCrutch.Tests/CourseCrutch.Tests.csproj" />
+  </Folder>
+  <Folder Name="/6) Misc/" />
+</Solution>
