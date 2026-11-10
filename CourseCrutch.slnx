@@ -22,5 +22,6 @@
   </Folder>
   <Folder Name="/6) Misc/">
     <File Path="API Key.txt" />
+    <File Path="General_Info.txt" />
   </Folder>
 </Solution>
