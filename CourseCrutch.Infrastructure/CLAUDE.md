@@ -12,4 +12,4 @@ Implementations of interfaces defined in Application: persistence, external serv
 
 ## Current state
 
-Only a placeholder `Class1.cs` exists. Application and Domain are not yet referenced. Add those references when the first implementation needs them.
+Only a placeholder `Class1.cs` exists. `CourseCrutch.Application` is referenced. `CourseCrutch.Domain` is not yet referenced. Add it when the first implementation uses a Domain type.

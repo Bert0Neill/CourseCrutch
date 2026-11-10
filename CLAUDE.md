@@ -23,7 +23,11 @@ Dependencies point inward. Do not add a reference that breaks this order.
 | `CourseCrutch.Clients` | nothing in the solution; calls the API over HTTP |
 | `CourseCrutch.Tests` | any project, for testing |
 
-Current state: the Domain, Application and Infrastructure projects contain only placeholder `Class1.cs` files, and the Application and Infrastructure projects have no project references yet.
+Current state:
+- Domain, Application and Infrastructure contain only placeholder `Class1.cs` files.
+- Project references in place: API → Application, API → Infrastructure, Application → Domain, Infrastructure → Application.
+- Pending: Infrastructure → Domain. Add it when the first implementation uses a Domain type.
+- Tests references no projects yet.
 
 ## Coding conventions
 
