@@ -20,5 +20,7 @@
   <Folder Name="/5) Unit Tests/">
     <Project Path="CourseCrutch.Tests/CourseCrutch.Tests.csproj" />
   </Folder>
-  <Folder Name="/6) Misc/" />
+  <Folder Name="/6) Misc/">
+    <File Path="API Key.txt" />
+  </Folder>
 </Solution>

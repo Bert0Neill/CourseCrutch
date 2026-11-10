@@ -100,7 +100,7 @@
         string.Join(Environment.NewLine,
             $"Words: {result.WordCount}",
             $"Characters: {result.CharacterCount}",
-            $"Summary: {result.Summary}",
+            $"Answer: {result.Answer}",
             $"Keywords: {string.Join(", ", result.Keywords)}");
 
     private async Task RunAsync(Func<Task> action)

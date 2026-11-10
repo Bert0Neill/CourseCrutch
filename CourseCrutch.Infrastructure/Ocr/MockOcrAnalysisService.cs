@@ -17,7 +17,7 @@ public sealed class MockOcrAnalysisService : IOcrAnalysisService
         var analysis = new OcrAnalysis(
             words.Length,
             text.Length,
-            "Mocked summary. No real analysis has run.",
+            "Mocked answer. No real analysis has run.",
             keywords);
 
         return Task.FromResult(analysis);

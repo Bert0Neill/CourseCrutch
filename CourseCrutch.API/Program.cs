@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
@@ -37,7 +37,7 @@ app.MapPost("/api/ocr/analyse", async Task<Results<Ok<OcrAnalysisResponse>, BadR
     return TypedResults.Ok(new OcrAnalysisResponse(
         analysis.WordCount,
         analysis.CharacterCount,
-        analysis.Summary,
+        analysis.Answer,
         analysis.Keywords));
 })
 .WithName("AnalyseOcrText");
