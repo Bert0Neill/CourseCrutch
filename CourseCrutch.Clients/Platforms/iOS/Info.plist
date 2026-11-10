@@ -43,6 +43,8 @@
             </array>
         </dict>
     </dict>
+    <key>NSCameraUsageDescription</key>
+    <string>Take a photo of text to extract it with on-device OCR.</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/appicon.appiconset</string>
 </dict>

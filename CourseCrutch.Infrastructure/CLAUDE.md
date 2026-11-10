@@ -12,4 +12,5 @@ Implementations of interfaces defined in Application: persistence, external serv
 
 ## Current state
 
-Only a placeholder `Class1.cs` exists. `CourseCrutch.Application` is referenced. `CourseCrutch.Domain` is not yet referenced. Add it when the first implementation uses a Domain type.
+- `Ocr/MockOcrAnalysisService` implements `IOcrAnalysisService` with mocked results. `DependencyInjection.cs` registers it through `AddInfrastructure()`, which the API calls.
+- `CourseCrutch.Application` is referenced. `CourseCrutch.Domain` is not yet referenced. Add it when the first implementation uses a Domain type.

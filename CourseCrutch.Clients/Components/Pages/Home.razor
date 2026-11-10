@@ -1,5 +1,125 @@
 ﻿@page "/"
+@inject IPhotoCaptureService PhotoCapture
+@inject IOcrService Ocr
+@inject IOcrApiClient OcrApi
 
-<h1>Hello, world!</h1>
+<h1>Scan Text</h1>
 
-Welcome to your new app.
+<div class="tabs" role="tablist">
+    <button class="tab @TabClass(Tab.Image)" role="tab" @onclick="() => SetTab(Tab.Image)">Image</button>
+    <button class="tab @TabClass(Tab.Text)" role="tab" @onclick="() => SetTab(Tab.Text)">Text</button>
+    <button class="tab @TabClass(Tab.Results)" role="tab" @onclick="() => SetTab(Tab.Results)">Results</button>
+</div>
+
+@switch (_activeTab)
+{
+    case Tab.Image:
+        <div class="tab-panel">
+            <button @onclick="TakePhotoAsync" disabled="@_busy">Take Photo</button>
+            @if (_imageDataUrl is not null)
+            {
+                <img class="captured" src="@_imageDataUrl" alt="Captured photo" />
+            }
+        </div>
+        break;
+
+    case Tab.Text:
+        <div class="tab-panel">
+            <textarea class="text-box" @bind="_extractedText" placeholder="Take a photo to extract text"></textarea>
+            <button @onclick="AnalyseAsync" disabled="@(_busy || string.IsNullOrWhiteSpace(_extractedText))">Send for Analysis</button>
+        </div>
+        break;
+
+    case Tab.Results:
+        <div class="tab-panel">
+            <textarea class="text-box" readonly>@_analysisText</textarea>
+        </div>
+        break;
+}
+
+@if (_busy)
+{
+    <p>Working...</p>
+}
+
+@if (_error is not null)
+{
+    <p class="error">@_error</p>
+}
+
+@code {
+    private enum Tab { Image, Text, Results }
+
+    private Tab _activeTab = Tab.Image;
+    private bool _busy;
+    private string? _imageDataUrl;
+    private string _extractedText = string.Empty;
+    private string _analysisText = string.Empty;
+    private string? _error;
+
+    private string TabClass(Tab tab) => _activeTab == tab ? "active" : string.Empty;
+
+    private void SetTab(Tab tab) => _activeTab = tab;
+
+    private async Task TakePhotoAsync()
+    {
+        await RunAsync(async () =>
+        {
+            var image = await PhotoCapture.CapturePhotoAsync();
+            if (image is null)
+            {
+                return;
+            }
+
+            _imageDataUrl = $"data:image/jpeg;base64,{Convert.ToBase64String(image)}";
+            _activeTab = Tab.Text;
+
+            try
+            {
+                var text = await Ocr.RecognizeTextAsync(image);
+                _extractedText = string.IsNullOrWhiteSpace(text) ? "No text found in image." : text;
+            }
+            catch (Exception ex)
+            {
+                _extractedText = ex.Message;
+            }
+        });
+    }
+
+    private async Task AnalyseAsync()
+    {
+        await RunAsync(async () =>
+        {
+            var result = await OcrApi.AnalyseAsync(_extractedText);
+            _analysisText = result is null ? string.Empty : FormatResult(result);
+            _activeTab = Tab.Results;
+        });
+    }
+
+    private static string FormatResult(OcrAnalysisResponse result) =>
+        string.Join(Environment.NewLine,
+            $"Words: {result.WordCount}",
+            $"Characters: {result.CharacterCount}",
+            $"Summary: {result.Summary}",
+            $"Keywords: {string.Join(", ", result.Keywords)}");
+
+    private async Task RunAsync(Func<Task> action)
+    {
+        _busy = true;
+        _error = null;
+        StateHasChanged();
+
+        try
+        {
+            await action();
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+}

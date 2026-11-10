@@ -1,0 +1,42 @@
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tab {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: transparent;
+}
+
+.tab.active {
+    background: #512BD4;
+    border-color: #512BD4;
+    color: white;
+}
+
+.tab-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.captured {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.text-box {
+    width: 100%;
+    min-height: 12rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.error {
+    color: #c62828;
+}

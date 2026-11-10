@@ -13,4 +13,4 @@ Use cases and application services. Orchestrates Domain objects. Defines the int
 
 ## Current state
 
-Only a placeholder `Class1.cs` exists. Remove it when the first real type is added.
+- `Ocr/IOcrAnalysisService` and `Ocr/OcrAnalysis` are the first real types. The placeholder `Class1.cs` has been removed.

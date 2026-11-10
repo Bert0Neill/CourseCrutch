@@ -1,8 +1,14 @@
+using CourseCrutch.API.Contracts;
+using CourseCrutch.Application.Ocr;
+using CourseCrutch.Infrastructure;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
@@ -11,31 +17,29 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-app.UseHttpsRedirection();
-
-var summaries = new[]
+else
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    app.UseHttpsRedirection();
+}
 
-app.MapGet("/weatherforecast", () =>
+app.MapPost("/api/ocr/analyse", async Task<Results<Ok<OcrAnalysisResponse>, BadRequest<string>>> (
+    OcrAnalysisRequest request,
+    IOcrAnalysisService service,
+    CancellationToken cancellationToken) =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    if (string.IsNullOrWhiteSpace(request.Text))
+    {
+        return TypedResults.BadRequest("Text is required.");
+    }
+
+    var analysis = await service.AnalyseAsync(request.Text, cancellationToken);
+
+    return TypedResults.Ok(new OcrAnalysisResponse(
+        analysis.WordCount,
+        analysis.CharacterCount,
+        analysis.Summary,
+        analysis.Keywords));
 })
-.WithName("GetWeatherForecast");
+.WithName("AnalyseOcrText");
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

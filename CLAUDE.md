@@ -24,7 +24,7 @@ Dependencies point inward. Do not add a reference that breaks this order.
 | `CourseCrutch.Tests` | any project, for testing |
 
 Current state:
-- Domain, Application and Infrastructure contain only placeholder `Class1.cs` files.
+- Domain contains only a placeholder `Class1.cs`. Application and Infrastructure contain real types (OCR analysis) and no placeholders.
 - Project references in place: API → Application, API → Infrastructure, Application → Domain, Infrastructure → Application.
 - Pending: Infrastructure → Domain. Add it when the first implementation uses a Domain type.
 - Tests references no projects yet.
