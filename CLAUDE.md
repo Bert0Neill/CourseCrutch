@@ -30,7 +30,7 @@ Current state:
 - Domain contains only a placeholder `Class1.cs`. Application and Infrastructure contain real types (OCR analysis) and no placeholders.
 - Project references in place: API → Application, API → Infrastructure, Application → Domain, Infrastructure → Application. Application, Infrastructure, API, Clients and Tests → Logging.
 - Pending: Infrastructure → Domain. Add it when the first implementation uses a Domain type.
-- Tests references Logging only.
+- Tests references Logging, Application, Infrastructure and API, and compiles the Clients API client in as linked files.
 - File logging reads the `FileLogging` section of `appsettings.json` (API) or the embedded `appsettings.json` (Clients). Files are named `<prefix>-<yyyy-MM-dd>.log`, with `-2`, `-3` suffixes for later runs on the same day.
 
 ## Coding conventions
