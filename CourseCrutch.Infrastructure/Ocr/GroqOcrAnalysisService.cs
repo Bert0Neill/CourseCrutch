@@ -9,13 +9,11 @@ namespace CourseCrutch.Infrastructure.Ocr;
 public sealed class GroqOcrAnalysisService(HttpClient httpClient, IConfiguration configuration, ILogger<GroqOcrAnalysisService> logger) : IOcrAnalysisService
 {
     private static string BuildSystemPrompt() =>
-        $"You are a helpful assistant. The current UTC date and time is {DateTime.UtcNow:yyyy-MM-dd HH:mm} UTC. " +
-        "Answer the user's question directly. List up to five keywords. " +
-        "Reply only with JSON: {\"answer\": string, \"keywords\": string[]}.";
+        $"You are a helpful assistant. Reply only with JSON: {{\"answer\": string, \"keywords\": string[]}}.";
 
     public async Task<OcrAnalysis> AnalyseAsync(string text, CancellationToken cancellationToken = default)
     {
-        var model = configuration["GroqAI:Model"] ?? "openai/gpt-oss-20b";
+        var model = configuration["GroqAI:Model"] ?? "openai/gpt-oss-20b"; // default model if not specified in configuration
 
         var request = new
         {

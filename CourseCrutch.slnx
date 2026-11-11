@@ -16,15 +16,14 @@
   </Folder>
   <Folder Name="/4) Infrastructure/">
     <Project Path="CourseCrutch.Infrastructure/CourseCrutch.Infrastructure.csproj" />
+    <Project Path="CourseCrutch.Logging/CourseCrutch.Logging.csproj" />
   </Folder>
   <Folder Name="/5) Unit Tests/">
     <Project Path="CourseCrutch.Tests/CourseCrutch.Tests.csproj" />
   </Folder>
   <Folder Name="/6) Misc/">
+    <File Path=".mcp.json" />
     <File Path="API Key.txt" />
     <File Path="General_Info.txt" />
-  </Folder>
-  <Folder Name="/7) Cross-cutting/">
-    <Project Path="CourseCrutch.Logging/CourseCrutch.Logging.csproj" />
   </Folder>
 </Solution>
