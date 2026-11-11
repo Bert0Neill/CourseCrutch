@@ -18,4 +18,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CourseCrutch.Logging\CourseCrutch.Logging.csproj" />
+  </ItemGroup>
+
 </Project>

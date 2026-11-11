@@ -1,8 +1,12 @@
-﻿using CourseCrutch.Clients.Models;
+﻿using System.Reflection;
+using CourseCrutch.Clients.Models;
 using CourseCrutch.Clients.Services;
+using CourseCrutch.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Devices;
+using Microsoft.Maui.Storage;
 using TesseractOcrMaui;
 
 namespace CourseCrutch.Clients
@@ -18,6 +22,14 @@ namespace CourseCrutch.Clients
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
+
+            using var settings = Assembly.GetExecutingAssembly().GetManifestResourceStream("appsettings.json");
+            if (settings is not null)
+            {
+                builder.Configuration.AddJsonStream(settings);
+            }
+
+            builder.Logging.AddFileLogging(builder.Configuration, FileSystem.AppDataDirectory);
 
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddTesseractOcr(files => files.AddFile("eng.traineddata"));

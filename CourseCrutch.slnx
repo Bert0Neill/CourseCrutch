@@ -24,4 +24,7 @@
     <File Path="API Key.txt" />
     <File Path="General_Info.txt" />
   </Folder>
+  <Folder Name="/7) Cross-cutting/">
+    <Project Path="CourseCrutch.Logging/CourseCrutch.Logging.csproj" />
+  </Folder>
 </Solution>
