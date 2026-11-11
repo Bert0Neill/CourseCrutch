@@ -16,18 +16,22 @@ Dependencies point inward. Do not add a reference that breaks this order.
 
 | Project | May reference |
 |---|---|
+| `CourseCrutch.Logging` | nothing in the solution |
 | `CourseCrutch.Domain` | nothing |
-| `CourseCrutch.Application` | Domain |
-| `CourseCrutch.Infrastructure` | Application, Domain |
-| `CourseCrutch.API` | Application, Infrastructure |
-| `CourseCrutch.Clients` | nothing in the solution; calls the API over HTTP |
+| `CourseCrutch.Application` | Domain, Logging |
+| `CourseCrutch.Infrastructure` | Application, Domain, Logging |
+| `CourseCrutch.API` | Application, Infrastructure, Logging |
+| `CourseCrutch.Clients` | Logging only; calls the API over HTTP |
 | `CourseCrutch.Tests` | any project, for testing |
+
+Logging is a cross-cutting leaf: it holds the file log provider and must not reference any other project in the solution. Domain stays free of it.
 
 Current state:
 - Domain contains only a placeholder `Class1.cs`. Application and Infrastructure contain real types (OCR analysis) and no placeholders.
-- Project references in place: API → Application, API → Infrastructure, Application → Domain, Infrastructure → Application.
+- Project references in place: API → Application, API → Infrastructure, Application → Domain, Infrastructure → Application. Application, Infrastructure, API, Clients and Tests → Logging.
 - Pending: Infrastructure → Domain. Add it when the first implementation uses a Domain type.
-- Tests references no projects yet.
+- Tests references Logging only.
+- File logging reads the `FileLogging` section of `appsettings.json` (API) or the embedded `appsettings.json` (Clients). Files are named `<prefix>-<yyyy-MM-dd>.log`, with `-2`, `-3` suffixes for later runs on the same day.
 
 ## Coding conventions
 

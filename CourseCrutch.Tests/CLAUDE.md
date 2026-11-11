@@ -13,4 +13,6 @@ xUnit test project for all layers. Test against public behaviour, not private im
 
 ## Current state
 
-`UnitTest1.cs` is the template placeholder. Remove it when real tests are added.
+- References `CourseCrutch.Logging` only.
+- `Logging/LogFileNamerTests.cs` and `Logging/FileLoggerProviderTests.cs` cover log file naming, same-day suffixes and level filtering. They write to a unique temp folder per test and delete it afterwards.
+- `CourseCrutch.Logging` exposes internals to this project through `InternalsVisibleTo`.
